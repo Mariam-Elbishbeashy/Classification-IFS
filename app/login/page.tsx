@@ -37,13 +37,18 @@ export default function LoginPage() {
         return
       }
 
+      // ✅ ADDED: Store token and user data
+      localStorage.setItem("token", data.access_token)
+      localStorage.setItem("user", JSON.stringify(data.user))
+
       setSuccess("✅ Login successful! Redirecting...")
       console.log("Logged in user:", data.user)
 
-      // Optional: redirect after 2 seconds
+      // ✅ CHANGED: Redirect to assessment page instead of home
       setTimeout(() => {
-        window.location.href = "/"
+        window.location.href = "/assessment"
       }, 1500)
+
     } catch (err) {
       console.error(err)
       setError("Server error. Please try again later.")

@@ -32,3 +32,6 @@ backend/.venv/
 *.pyc
 __pycache__/
 *.db
+/venv
+
+ifs_character_predictor.joblib
