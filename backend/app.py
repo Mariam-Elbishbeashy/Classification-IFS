@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from database import engine, get_db
-from models import Base, User, Question, AssessmentResponse
-from schemas import UserCreate, UserLogin, UserOut
-from auth import hash_password, verify_password, create_access_token, decode_token
+from .database import engine, get_db
+from .models import Base, User, Question, AssessmentResponse
+from .schemas import UserCreate, UserLogin, UserOut
+from .auth import hash_password, verify_password, create_access_token, decode_token
 from fastapi import Header
 from typing import List, Dict, Any
 from pydantic import BaseModel
@@ -14,9 +14,10 @@ import pandas as pd
 import numpy as np
 import os
 from sklearn.preprocessing import LabelEncoder
+from .ml_models.predict import predict_top_characters
+from .voice_router import voice_router
+from .video_router import video_router
 
-# ✅ Create all tables
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="ANA Auth API")
 
@@ -29,6 +30,11 @@ app.add_middleware(
     allow_methods=["*"], 
     allow_headers=["*"],
 )
+app.include_router(voice_router)
+app.include_router(video_router) 
+
+# ✅ Create all tables
+Base.metadata.create_all(bind=engine)
 
 # ADD THESE CLASS DEFINITIONS FOR MODEL LOADING
 
@@ -1031,3 +1037,12 @@ def model_status():
 @app.get("/")
 def root():
     return {"message": "ANA API is running!"}
+
+@app.post("/analyze-text")
+def analyze_text(payload: dict):
+    text = payload.get("text", "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Text input is required")
+
+    results = predict_top_characters(text)  # -> [{"label": "...", "confidence": 0.93}, ...]
+    return {"predictions": results}

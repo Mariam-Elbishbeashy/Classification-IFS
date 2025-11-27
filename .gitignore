@@ -35,3 +35,19 @@ __pycache__/
 /venv
 
 ifs_character_predictor.joblib
+.DS_Store
+# Whisper cache
+~/.cache/whisper/
+
+backend/gesture_models/*
+!backend/gesture_models/.gitkeep
+!backend/gesture_models/keypoint_classifier/.gitkeep
+!backend/gesture_models/point_history_classifier/.gitkeep
+
+backend/ml_models/*
+!backend/ml_models/.gitkeep
+
+backend/vision_models/*
+!backend/vision_models/.gitkeep
+!backend/vision_models/emotion_model/.gitkeep
+!backend/vision_models/face_detection_model/.gitkeep

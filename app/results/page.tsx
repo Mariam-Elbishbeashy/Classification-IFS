@@ -483,6 +483,12 @@ export default function ResultsPage() {
                       Retake Discovery
                     </Button>
                   </Link>
+                  <Link href="/check-in">
+                    <Button className="gap-2 bg-gradient-to-r from-primary via-secondary to-accent text-white hover:opacity-90 transition-all duration-300">
+                      <Sparkles className="w-4 h-4" />
+                      Update Your Characters
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

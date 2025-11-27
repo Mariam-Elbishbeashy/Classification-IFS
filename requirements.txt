@@ -5,3 +5,14 @@ pydantic
 passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
+joblib
+scikit-learn
+numpy
+pandas
+tensorflow
+openai-whisper
+ffmpeg-python
+httpx
+mediapipe
+opencv-python
+recordrtc
